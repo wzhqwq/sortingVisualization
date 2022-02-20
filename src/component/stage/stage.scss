@@ -1,0 +1,139 @@
+$label-bg: rgb(222, 243, 253);
+$compare-bg: #FFF;
+$compare-border: 2px solid #AAA;
+$mask-bg: #FFFD;
+$mark-bg: rgb(255, 221, 109);
+
+.stage {
+  height: 100%;
+  position: relative;
+}
+.stage-animation,
+.stage > .stage-static {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.stage-static {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &.logged {
+    flex-direction: row;
+    align-items: stretch;
+    > .stage-static {
+      flex-grow: 1;
+      margin-left: 20px;
+    }
+  }
+}
+.stage-animation {
+  > .number,
+  > .linked_node {
+    position: absolute;
+    top: 0;
+    left: 0;
+    // transition: none;
+  }
+  > .number.null {
+    display: none;
+  }
+}
+.stage-logger {
+  width: 260px;
+  > div {
+    position: fixed;
+    z-index: 100;
+  }
+}
+
+.mask {
+  width: 100%;
+  height: calc(100% - 10px);
+  top: 10px;
+  left: 0;
+  position: absolute;
+  background-color: $mask-bg;
+  filter: opacity(0);
+}
+
+.compare-wrap,
+.mark {
+  position: absolute;
+  height: 60px;
+  padding: 10px;
+  margin: -10px;
+  filter: opacity(0);
+}
+.compare-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.compare-symbol {
+  font-size: 30px;
+  width: 40px;
+  height: 40px;
+  margin: -22px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: $compare-bg;
+  border: $compare-border;
+  font-family: Courier, monospace;
+  font-weight: bold;
+}
+.mark {
+  border-radius: 10px;
+  background-color: $mark-bg;
+}
+
+.variable {
+  border-radius: 16px;
+  background-color: $label-bg;
+  position: relative;
+  filter: drop-shadow(0px 2px 2px #0003);
+  &.inline {
+    padding-left: 5px;
+    margin-top: 10px;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+  }
+  &:not(.inline) {
+    padding: 10px;
+    margin-top: 40px;
+    border-top-left-radius: 0;
+    > .variable-label {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+      display: inline-block;
+      &::before {
+        content: "";
+        background-color: $label-bg;
+        width: calc(100% + 30px);
+        height: calc(100% + 20px);
+        margin: -10px;
+        margin-top: -20px;
+        margin-bottom: -30px;
+        display: block;
+        border-radius: 16px 16px 0 0;
+
+        transform-origin: left bottom;
+        transform: perspective(200px) rotateX(45deg);
+      }
+      .label-text {
+        position: relative;
+      }
+    }
+  }
+}
+.label-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}

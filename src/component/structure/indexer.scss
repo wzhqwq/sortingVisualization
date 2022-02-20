@@ -1,0 +1,49 @@
+.indexer {
+  position: fixed;
+  transition: filter .3s ease-out;
+  filter: opacity(0);
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  .label {
+    position: relative;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #FFF;
+    border: 1px solid #AAA;
+    border-radius: 5px;
+    margin-top: -4px;
+    display: flex;
+    height: 20px;
+    line-height: 20px;
+    align-items: center;
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      border: 5px solid transparent;
+      left: calc(50% - 5px);
+    }
+    &::before {
+      border-bottom-color: #AAA;
+      top: -11px;
+    }
+    &::after {
+      border-bottom-color: #FFF;
+      top: -10px;
+    }
+    .icon {
+      margin-right: 5px;
+      height: 20px;
+      color: rgb(17, 141, 199);
+      > svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  &.show {
+    filter: opacity(1);
+  }
+}

@@ -1,0 +1,38 @@
+.logger {
+  width: 240px;
+  height: 480px;
+  overflow: auto;
+  > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    > div {
+      margin-right: 5px;
+      &:not(.text) {
+        padding: .1rem .3rem;
+        border-radius: 4px;
+        font-weight: bold;
+        box-shadow: 0 1px 1px #0003;
+      }
+      &.text {
+        font-size: 1.1rem;
+      }
+      &.primary {
+        background-color: rgb(196, 226, 255);
+        color: rgb(0, 92, 179);
+      }
+      &.success {
+        background-color: rgb(164, 241, 190);
+        color: rgb(0, 141, 54);
+      }
+      &.gray {
+        background-color: rgb(226, 226, 226);
+        color: rgb(100, 100, 100);
+      }
+      &.info {
+        background-color: rgb(159, 249, 255);
+        color: rgb(0, 138, 148);
+      }
+    }
+  }
+}

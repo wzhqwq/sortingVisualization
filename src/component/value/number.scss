@@ -1,0 +1,22 @@
+.number {
+  height: 60px;
+  min-width: 60px;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0, 132, 209);
+  border-radius: 12px;
+  color: white;
+  font-size: 30px;
+  box-sizing: border-box;
+  // transition: background-color ease-out;
+
+  &.highlight {
+    background-color: rgb(0, 177, 80);
+  }
+  &.null {
+    border: 2px dashed #888;
+    background-color: transparent;
+  }
+}

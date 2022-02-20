@@ -1,0 +1,36 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex-grow: 1;
+  padding: 20px;
+  @media screen and (max-width: 768px) {
+    padding: 0
+  }
+}
+
+.form-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0;
+  > span {
+    margin: 0 5px;
+  }
+}
+
+.speed-0 .transition {
+  transition-duration: 2s;
+}
+.speed-1 .transition {
+  transition-duration: 1s;
+}
+.speed-2 .transition {
+  transition-duration: .5s;
+}
+.speed-3 .transition {
+  transition-duration: .25s;
+}
