@@ -22,20 +22,26 @@ const speedToDuration = [2000, 1000, 500, 250]
 export default function ContextWrapper({ children }) {
   const [variables, setVariables] = useState<VariableType<ValueType<any>>[]>([])
   const [speed, setSpeed] = useState(1)
+  const [useTransition, setUseTransition] = useState(false)
 
   const speedRef = useRef(1)
   const animationPromise = useRef<UtilReturnType>(() => new Promise(r => r()))
   const animationCommandHandler = useRef<AnimationCommandHandlerType>(null)
   const generator = useRef<Generator<UtilReturnType, void, GeneratorNextType>>(null)
+  const isWait = useRef(false)
 
   const declare = useCallback(<T extends ValueType<any>>(name: string, value: T) => {
     setVariables(variables => [...variables, new VariableType<T>(name, value)])
   }, [])
-  const wait = useCallback((fn) => () =>
-    new Promise<void>(resolve => {
-      fn?.()
-      setTimeout(resolve, speedToDuration[speedRef.current])
-    })
+  const wait = useCallback((fn) => {
+    isWait.current = true
+    return () =>
+      new Promise<void>(resolve => {
+        fn?.()
+        setTimeout(resolve, speedToDuration[speedRef.current])
+        isWait.current = false
+      })
+  }
   , [])
   const assign = useCallback((destination: NumberType, source: NumberType) => () =>
     animationCommandHandler.current?.(
@@ -64,7 +70,9 @@ export default function ContextWrapper({ children }) {
   }), [declare, assign, wait, swap, compare])
 
   const step = useCallback(async () => {
+    setUseTransition(isWait.current)
     let result = generator.current?.next(await animationPromise?.current?.())
+    setUseTransition(true)
     if (result.done) return true
     animationPromise.current = result.value as UtilReturnType
     return false
@@ -105,7 +113,7 @@ export default function ContextWrapper({ children }) {
   return (
     <Controller.Provider value={controller}>
       <Model.Provider value={model}>
-        <div className={`speed-${speed}`} style={{ height: "100%" }}>
+        <div className={useTransition ? `speed-${speed}` : ''} style={{ height: "100%" }}>
           {children}
         </div>
       </Model.Provider>

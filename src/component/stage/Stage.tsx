@@ -31,14 +31,6 @@ function Label({ children, inline = false, label }) {
 }
 
 const getElement = (variable: VariableType<ValueType<any>>) => {
-  if (variable.value instanceof NumberType)
-    return (
-      <Label inline label={variable.label} key={variable.label}>
-        <div className="number-room">
-          <Number number={variable.value} />
-        </div>
-      </Label>
-    )
   if (variable.value instanceof LinearTableType)
     return (
       <Label label={variable.label} key={variable.label}>
@@ -96,11 +88,13 @@ export default function Stage() {
             a.value = b.value = null
             keyframe = new KeyframeEffect(numActor1.ref.current, [
               { transform: `translate(${rectA.left}px, ${rectA.top}px)` },
+              { transform: `translate(${(rectA.left + rectB.left) / 2}px, ${(rectA.top + rectB.top) / 2}px) scale(.8)` },
               { transform: `translate(${rectB.left}px, ${rectB.top}px)` },
             ], animationOptions)
             {
               const oppositeKeyframe = new KeyframeEffect(numActor2.ref.current, [
                 { transform: `translate(${rectB.left}px, ${rectB.top}px)` },
+                { transform: `translate(${(rectA.left + rectB.left) / 2}px, ${(rectA.top + rectB.top) / 2}px) scale(1.2)` },
                 { transform: `translate(${rectA.left}px, ${rectA.top}px)` },
               ], animationOptions)
               const oppositeAnimation = new Animation(oppositeKeyframe, document.timeline)
@@ -118,8 +112,10 @@ export default function Stage() {
             break
           case "moveTo":
             numActor1.copy(a)
+            a.hidden = true
             keyframe = new KeyframeEffect(numActor1.ref.current, [
               { transform: `translate(${rectA.left}px, ${rectA.top}px)` },
+              { transform: `translate(${(rectA.left + rectB.left) / 2}px, ${(rectA.top + rectB.top) / 2}px) scale(1.2)` },
               { transform: `translate(${rectB.left}px, ${rectB.top}px)` },
             ], animationOptions)
             afterWork = () => {
@@ -173,7 +169,7 @@ export default function Stage() {
         const animation = new Animation(keyframe, document.timeline)
         animation.onfinish = () => {
           afterWork?.()
-          resolve()
+          setTimeout(resolve, 0)
           setAnimationType(AnimationType.None)
         }
         animation.play()
@@ -185,6 +181,23 @@ export default function Stage() {
 
   const logger = variables.find(v => v.value instanceof LoggerType) as VariableType<LoggerType>
 
+  const getDataStage = useCallback(() => (
+    <div className="stage-static">
+      <div className="inline-variables">
+        {variables
+        .filter(v => v.value instanceof NumberType)
+        .map(variable => (
+          <Label inline label={variable.label} key={variable.label}>
+            <div className="number-room">
+              <Number number={variable.value as NumberType} />
+            </div>
+          </Label>
+        ))}
+      </div>
+      {variables.map(variable => getElement(variable))}
+    </div>
+  ), [variables])
+
   return (
     <div className="stage" ref={stageRef}>
       {
@@ -195,15 +208,9 @@ export default function Stage() {
                 <Logger logger={logger.value} />
               </Label>
             </div>
-            <div className="stage-static">
-              {variables.map(variable => getElement(variable))}
-            </div>
+            {getDataStage()}
           </div>
-        ) : (
-          <div className="stage-static">
-            {variables.map(variable => getElement(variable))}
-          </div>
-        )
+        ) : getDataStage()
       }
       <div className="stage-animation">
         <div className="mask" ref={maskRef}>

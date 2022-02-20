@@ -50,18 +50,20 @@ export default function *mergeSort(input: number[], {declare, compare, assign, w
     yield wait(() => logger.addLog(
       <Fragment>
         <div className="primary">正在归并</div>
-        <div className="text">{s}<ArrowForward />{s << 1}</div>
+        <div className="text">{s}</div>
+        <ArrowForward />
+        <div className="text">{s << 1}</div>
       </Fragment>
     ))
     let s2 = s << 1
     for (let i = s2; i < n; i++) {
       a.get(i).hidden = true
     }
-    for (let i = 0; i + s2 < n; i += s2) {
+    for (let i = 0; i < n; i++) {
+      b.get(i).hidden = true
+    }
+    for (let i = 0; i + s2 <= n; i += s2) {
       yield *merge(a, b, i, i + s - 1, i + s2 - 1)
-      for (let j = i; j < i + s2; j++) {
-        a.get(j).hidden = true
-      }
       let next = Math.min(i + (s2 << 1), n)
       for (let j = i + s2; j < next; j++) {
         a.get(j).hidden = false
@@ -84,14 +86,19 @@ export default function *mergeSort(input: number[], {declare, compare, assign, w
     yield wait(() => logger.changeLatestLog(
       <Fragment>
         <div className="primary">完成</div>
-        <div className="text">{s}<ArrowForward />{s << 1}</div>
+        <div className="text">{s}</div>
+        <ArrowForward />
+        <div className="text">{s << 1}</div>
       </Fragment>
     ))
   }
   while (s <= n) {
-    // 由于yield不能函数层层套，没办法导出函数，就不做代码复用了
     yield *mergeSequence(a, b)
     s <<= 1
     yield *mergeSequence(b, a)
+    s <<= 1
+  }
+  for (let i = 0; i < n; i++) {
+    b.get(i).value = null
   }
 }

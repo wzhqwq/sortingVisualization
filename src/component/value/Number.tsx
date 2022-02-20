@@ -18,11 +18,12 @@ export default function Number({ number }: PropsType) {
 
   return (
     <div
-      className={`number${highlighted ? ' highlight' : ''}${value === null ? ' null' : ''}`}
-      style={{ filter: hidden ? 'opacity(.3)' : '' }}
+      className={`number${value === null ? ' null' : ''}${hidden ? ' hide': ''}`}
       ref={number.ref}
     >
-      {value ?? ""}
+      <div className={`content transition${highlighted ? ' highlight' : ''}`}>
+        {value ?? ""}
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import IndexType from "../structure/IndexType"
 import LinearTableType from "../structure/LinearTableType"
 import { UtilsType } from "../util/ContextWrapper"
 
-export default function *selectionSort(input: number[], {declare, compare, swap}: UtilsType) {
+export default function *selectionSort(input: number[], {declare, compare, swap, wait}: UtilsType) {
   let array = new LinearTableType(input)
   let n = input.length
   let indexMax = new IndexType(null)
@@ -18,10 +18,10 @@ export default function *selectionSort(input: number[], {declare, compare, swap}
     }
     let max = indexMax.value
     indexMax.value = null
-    max.highlight()
     if (max !== array.get(n - 1 - i)) {
       yield swap(array.get(n - 1 - i), max)
     }
+    yield wait(() => array.get(n - 1 - i).highlight())
   }
   array.get(0).highlight()
 }

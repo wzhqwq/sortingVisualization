@@ -27,6 +27,12 @@ $mark-bg: rgb(255, 221, 109);
       margin-left: 20px;
     }
   }
+  .inline-variables {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
 }
 .stage-animation {
   > .number,

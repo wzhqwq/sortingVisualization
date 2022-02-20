@@ -1,7 +1,7 @@
 import LinearTableType from "../structure/LinearTableType"
 import { UtilsType } from "../util/ContextWrapper"
 
-export default function *bubbleSort(input: number[], {declare, compare, swap}: UtilsType) {
+export default function *bubbleSort(input: number[], {declare, compare, swap, wait}: UtilsType) {
   let swapped = true
   let array = new LinearTableType(input)
   let n = input.length
@@ -16,7 +16,8 @@ export default function *bubbleSort(input: number[], {declare, compare, swap}: U
         swapped = true
       }
     }
-    array.get(n - 1 - i).highlight()
+    let t = n - 1 - i
+    yield wait(() => array.get(t).highlight())
   }
   for (let j = 0; j < n - i; j++) {
     array.get(j).highlight()

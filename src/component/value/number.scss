@@ -1,22 +1,36 @@
+$stripe-1: #8884;
+$stripe-2: #8880;
+$stripe-width: 8px;
+
 .number {
   height: 60px;
   min-width: 60px;
-  padding: 0 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(0, 132, 209);
   border-radius: 12px;
-  color: white;
-  font-size: 30px;
-  box-sizing: border-box;
-  // transition: background-color ease-out;
-
-  &.highlight {
-    background-color: rgb(0, 177, 80);
+  background-image: repeating-linear-gradient(45deg, $stripe-1, $stripe-1 $stripe-width, $stripe-2 $stripe-width, $stripe-2 $stripe-width * 2);
+  
+  .content {
+    padding: 0 10px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 132, 209);
+    border-radius: 12px;
+    color: white;
+    font-size: 30px;
+    transition-property: background-color;
+    transition-timing-function: ease-out;
+    &.highlight {
+      background-color: rgb(0, 177, 80);
+    }
   }
   &.null {
-    border: 2px dashed #888;
-    background-color: transparent;
+    .content {
+      visibility: hidden;
+    }
+  }
+  &.hide:not(.null) {
+    filter: opacity(.3);
   }
 }

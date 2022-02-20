@@ -54,5 +54,6 @@ export default class NumberType extends SubstanceType<number> {
   copy(original: NumberType) {
     super.copy(original)
     this.highlighted = original._highlighted
+    this.hidden = original._hidden
   }
 }
