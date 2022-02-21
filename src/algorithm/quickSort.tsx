@@ -37,6 +37,7 @@ export default function* quickSort(input: number[], { declare, compare, swap, wa
       }
     }
     yield swap(array.get(l), array.get(j))
+    array.get(j).highlight()
     indexI.value = indexJ.value = null
     if (l < j - 1) {
       yield wait(() => logger.addLog((<Fragment>{leftRange}{computing}{toRange(l, j - 1)}</Fragment>), true))
@@ -47,6 +48,7 @@ export default function* quickSort(input: number[], { declare, compare, swap, wa
     }
     else {
       yield wait(() => logger.addLog((<Fragment>{leftRange}{skipped}</Fragment>), true))
+      if (l === j - 1) array.get(l).highlight()
     }
     if (j + 1 < r) {
       yield wait(() => logger.addLog((<Fragment>{rightRange}{computing}{toRange(j + 1, r)}</Fragment>)))
@@ -57,6 +59,7 @@ export default function* quickSort(input: number[], { declare, compare, swap, wa
     }
     else {
       yield wait(() => logger.addLog((<Fragment>{rightRange}{computing}{toRange(j + 1, r)}</Fragment>)))
+      if (j + 1 === r) array.get(r).highlight()
     }
     yield wait(() => {
       logger.popLog()

@@ -17,7 +17,6 @@ $mark-bg: rgb(255, 221, 109);
     align-items: stretch;
     > .stage-static {
       flex-grow: 1;
-      margin-left: 20px;
     }
   }
   .inline-variables {
@@ -45,6 +44,7 @@ $mark-bg: rgb(255, 221, 109);
 .stage-logger {
   width: 260px;
   flex-shrink: 0;
+  margin: 0 20px;
   > div {
     position: fixed;
     z-index: 100;
