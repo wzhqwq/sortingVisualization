@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, ReactElement } from "react"
-import SubstanceType from "./SubstanceType"
+import ValueType from "./ValueType"
 
 type Hook<T> = Dispatch<SetStateAction<T>>
 
@@ -8,7 +8,7 @@ export type LogType = {
   indent: number,
 }
 
-export default class LoggerType extends SubstanceType<LogType[]> {
+export default class LoggerType extends ValueType<LogType[]> {
   constructor() {
     super([])
   }

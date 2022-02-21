@@ -1,14 +1,12 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import LinearTableType from "../../structure/LinearTableType"
 import NumberType from "../../structure/NumberType"
-import LinkedNodeType from "../../structure/LinkedNodeType"
 import ValueType from "../../structure/ValueType"
 import IndexType from "../../structure/IndexType"
 import VariableType from "../../structure/VariableType"
 import { Controller, Model } from "../../util/contexts"
 import LinearTable from "../structure/LinearTable"
 import Number from "../value/Number"
-import LinkedNode from "../structure/LinkedNode"
 
 import "./stage.scss"
 import Indexer from "../structure/Indexer"
@@ -16,10 +14,11 @@ import LoggerType from "../../structure/LoggerType"
 import Logger from "../structure/Logger"
 import BinaryTreeType from "../../structure/BinaryTreeType"
 import BinaryTree from "../structure/BinaryTree"
+import BucketType from "../../structure/BucketType"
+import Bucket from "../structure/Bucket"
 
 const numActor1 = new NumberType(null)
 const numActor2 = new NumberType(null)
-const nodeActor = new LinkedNodeType(null, null)
 
 function Label({ children, inline = false, label }) {
   return (
@@ -39,6 +38,10 @@ const getElement = (variable: VariableType<ValueType<any>>) => {
         <BinaryTree data={variable.value} />
       </Label>
     )
+  if (variable.value instanceof BucketType)
+    return (
+      <Bucket bucket={variable.value} label={variable.label} key={variable.label} />
+    )
   if (variable.value instanceof LinearTableType)
     return (
       <Label label={variable.label} key={variable.label}>
@@ -48,17 +51,7 @@ const getElement = (variable: VariableType<ValueType<any>>) => {
   return null
 }
 
-enum AnimationType {
-  None,
-  Swap,
-  Compare,
-  Move,
-  NodeMove,
-  Mark,
-}
-
 export default function Stage() {
-  const [animationType, setAnimationType] = useState(AnimationType.None)
   const [compareSymbol, setCompareSymbol] = useState("")
 
   const controller = useContext(Controller)
@@ -116,7 +109,6 @@ export default function Stage() {
               b.copy(numActor1)
               numActor1.value = numActor2.value = null
             }
-            setAnimationType(AnimationType.Swap)
             break
           case "moveTo":
             numActor1.copy(a)
@@ -130,7 +122,6 @@ export default function Stage() {
               b.copy(numActor1)
               numActor1.value = null
             }
-            setAnimationType(AnimationType.Move)
             break
           case "compare":
             numActor1.copy(a)
@@ -162,7 +153,6 @@ export default function Stage() {
               numActor1.value = numActor2.value = null
             }
             setCompareSymbol(command.extra)
-            setAnimationType(AnimationType.Compare)
             break
           case "mark":
             // highlight
@@ -178,7 +168,6 @@ export default function Stage() {
         animation.onfinish = () => {
           afterWork?.()
           setTimeout(resolve, 0)
-          setAnimationType(AnimationType.None)
         }
         animation.play()
       })
@@ -225,9 +214,6 @@ export default function Stage() {
         </div>
         <Number number={numActor1} />
         <Number number={numActor2} />
-        <LinkedNode node={nodeActor} hide={
-          animationType !== AnimationType.NodeMove
-        } />
         <div className="compare-wrap" ref={compareRef}>
           <div className="compare-symbol">{compareSymbol}</div>
         </div>

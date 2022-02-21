@@ -15,6 +15,7 @@ import insertionSort from './algorithm/insertionSort'
 import quickSort from './algorithm/quickSort'
 import mergeSort from './algorithm/mergeSort'
 import heapSort from './algorithm/heapSort'
+import boxSort from './algorithm/boxSort'
 
 type PageInfoType = {
   title: string,
@@ -26,7 +27,7 @@ const pages: MapLike<PageInfoType> = {
   '/box': {
     title: '箱子排序',
     icon: <FilterNoneRounded />,
-    algorithm: null,
+    algorithm: boxSort,
   },
   '/bubble': {
     title: '冒泡排序',

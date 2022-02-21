@@ -7,7 +7,8 @@ $stripe-width: 8px;
   min-width: 60px;
   border-radius: 12px;
   background-image: repeating-linear-gradient(45deg, $stripe-1, $stripe-1 $stripe-width, $stripe-2 $stripe-width, $stripe-2 $stripe-width * 2);
-  
+  position: relative;
+
   .content {
     padding: 0 10px;
     height: 100%;
@@ -32,5 +33,12 @@ $stripe-width: 8px;
   }
   &.hide:not(.null) {
     filter: opacity(.3);
+  }
+  .link {
+    position: absolute;
+    width: 35px;
+    top: 16px;
+    right: -30px;
+    color:rgb(0, 132, 209);
   }
 }

@@ -1,12 +1,14 @@
+import { ArrowForward } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import NumberType from "../../structure/NumberType"
 import "./number.scss"
 
 type PropsType = {
   number: NumberType,
+  linked?: boolean,
 }
 
-export default function Number({ number }: PropsType) {
+export default function Number({ number, linked = false }: PropsType) {
   const [highlighted, setHighlighted] = useState(number.highlighted)
   const [hidden, setHidden] = useState(number.hidden)
   const [value, setValue] = useState(number.value)
@@ -24,6 +26,13 @@ export default function Number({ number }: PropsType) {
       <div className={`content transition${highlighted ? ' highlight' : ''}`}>
         {value ?? ""}
       </div>
+      {
+        linked && value !== null && (
+          <div className="link">
+            <ArrowForward />
+          </div>
+        )
+      }
     </div>
   )
 }

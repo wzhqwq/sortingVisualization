@@ -1,0 +1,25 @@
+.bucket {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  height: 60px;
+  margin-bottom: 10px;
+  .label {
+    padding: 10px;
+    border-right: 2px solid rgb(159, 225, 255);
+    margin-right: 10px;
+    width: 30px;
+    text-align: right;
+  }
+  .numbers {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+.bucket-item {
+  margin-right: 20px;
+  > .null,
+  > .hide {
+    visibility: hidden;
+  }
+}
