@@ -59,9 +59,6 @@ export default function *mergeSort(input: number[], {declare, compare, assign, w
     for (let i = s2; i < n; i++) {
       a.get(i).hidden = true
     }
-    for (let i = 0; i < n; i++) {
-      b.get(i).hidden = true
-    }
     for (let i = 0; i + s2 <= n; i += s2) {
       yield *merge(a, b, i, i + s - 1, i + s2 - 1)
       let next = Math.min(i + (s2 << 1), n)
@@ -80,9 +77,6 @@ export default function *mergeSort(input: number[], {declare, compare, assign, w
         }
       }
     }
-    for (let i = 0; i < n; i++) {
-      a.get(i).hidden = false
-    }
     yield wait(() => logger.changeLatestLog(
       <Fragment>
         <div className="primary">完成</div>
@@ -91,14 +85,14 @@ export default function *mergeSort(input: number[], {declare, compare, assign, w
         <div className="text">{s << 1}</div>
       </Fragment>
     ))
+    for (let i = 0; i < n; i++) {
+      a.get(i).value = null
+    }
   }
   while (s <= n) {
     yield *mergeSequence(a, b)
     s <<= 1
     yield *mergeSequence(b, a)
     s <<= 1
-  }
-  for (let i = 0; i < n; i++) {
-    b.get(i).value = null
   }
 }
