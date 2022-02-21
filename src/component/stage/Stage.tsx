@@ -14,6 +14,8 @@ import "./stage.scss"
 import Indexer from "../structure/Indexer"
 import LoggerType from "../../structure/LoggerType"
 import Logger from "../structure/Logger"
+import BinaryTreeType from "../../structure/BinaryTreeType"
+import BinaryTree from "../structure/BinaryTree"
 
 const numActor1 = new NumberType(null)
 const numActor2 = new NumberType(null)
@@ -31,6 +33,12 @@ function Label({ children, inline = false, label }) {
 }
 
 const getElement = (variable: VariableType<ValueType<any>>) => {
+  if (variable.value instanceof BinaryTreeType)
+    return (
+      <Label label={variable.label} key={variable.label}>
+        <BinaryTree data={variable.value} />
+      </Label>
+    )
   if (variable.value instanceof LinearTableType)
     return (
       <Label label={variable.label} key={variable.label}>

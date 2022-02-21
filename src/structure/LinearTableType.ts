@@ -7,6 +7,9 @@ export default class LinearTableType extends ValueType<NumberType[]> {
   }
 
   get(index: number) {
+    if (index < 0 || index >= this.value.length) {
+      throw new Error(`越界啦笨蛋哈哈哈哈哈: ${index}`)
+    }
     return this.value[index]
   }
 

@@ -113,7 +113,7 @@ export default function ContextWrapper({ children }) {
   return (
     <Controller.Provider value={controller}>
       <Model.Provider value={model}>
-        <div className={useTransition ? `speed-${speed}` : ''} style={{ height: "100%" }}>
+        <div className={"main" + (useTransition ? ` speed-${speed}` : '')}>
           {children}
         </div>
       </Model.Provider>

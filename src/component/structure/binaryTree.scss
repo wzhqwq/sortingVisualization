@@ -1,0 +1,12 @@
+.binary-tree {
+  display: flex;
+  flex-direction: column;
+  .layer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+.binary-tree-wrap {
+  overflow: auto;
+}

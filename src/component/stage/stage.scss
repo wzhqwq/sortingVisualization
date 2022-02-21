@@ -5,20 +5,13 @@ $mask-bg: #FFFD;
 $mark-bg: rgb(255, 221, 109);
 
 .stage {
-  height: 100%;
+  flex-shrink: 0;
   position: relative;
-}
-.stage-animation,
-.stage > .stage-static {
-  position: absolute;
-  height: 100%;
-  width: 100%;
 }
 .stage-static {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   &.logged {
     flex-direction: row;
     align-items: stretch;
@@ -35,6 +28,9 @@ $mark-bg: rgb(255, 221, 109);
   }
 }
 .stage-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
   > .number,
   > .linked_node {
     position: absolute;
@@ -101,6 +97,8 @@ $mark-bg: rgb(255, 221, 109);
   background-color: $label-bg;
   position: relative;
   filter: drop-shadow(0px 2px 2px #0003);
+  flex-shrink: 0;
+  max-width: calc(100vw - 80px);
   &.inline {
     padding-left: 5px;
     margin-top: 10px;

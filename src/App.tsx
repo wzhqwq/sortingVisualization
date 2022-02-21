@@ -14,6 +14,7 @@ import selectionSort from './algorithm/selectionSort'
 import insertionSort from './algorithm/insertionSort'
 import quickSort from './algorithm/quickSort'
 import mergeSort from './algorithm/mergeSort'
+import heapSort from './algorithm/heapSort'
 
 type PageInfoType = {
   title: string,
@@ -35,7 +36,7 @@ const pages: MapLike<PageInfoType> = {
   '/heap': {
     title: '堆排序',
     icon: <ChangeHistory />,
-    algorithm: null,
+    algorithm: heapSort,
   },
   '/insert': {
     title: '插入排序',
@@ -117,16 +118,14 @@ function App() {
           }
         </List>
       </Drawer>
-      <div className="main">
-        <ContextWrapper>
-          <Routes>
-            <Route path="/" element={<Navigate to="/bubble" replace />} />
-            {Object.keys(pages).filter(page => pages[page].algorithm).map(page => (
-              <Route path={page} element={<AlgorithmPage algorithm={pages[page].algorithm} arr={arr} />} key={page} />
-            ))}
-          </Routes>
-        </ContextWrapper>
-      </div>
+      <ContextWrapper>
+        <Routes>
+          <Route path="/" element={<Navigate to="/bubble" replace />} />
+          {Object.keys(pages).filter(page => pages[page].algorithm).map(page => (
+            <Route path={page} element={<AlgorithmPage algorithm={pages[page].algorithm} arr={arr} />} key={page} />
+          ))}
+        </Routes>
+      </ContextWrapper>
       <Dialog open={showGenerateData} onClose={() => setShowGenerateData(false)}>
         <DialogTitle>随机生成数据</DialogTitle>
         <DialogContent>

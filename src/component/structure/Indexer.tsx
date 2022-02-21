@@ -1,4 +1,4 @@
-import { ArrowForward, ArrowBack } from "@mui/icons-material"
+import { ArrowForward, ArrowBack, Search, Check } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import IndexType from "../../structure/IndexType"
 import NumberType from "../../structure/NumberType"
@@ -13,6 +13,8 @@ export type PropsType = {
 const icons = {
   'left': <ArrowBack />,
   'right': <ArrowForward />,
+  'search': <Search />,
+  'ok': <Check />
 }
 
 export default function Indexer({ index, label }: PropsType) {
