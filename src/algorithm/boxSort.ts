@@ -11,8 +11,9 @@ export default function *boxSort(input: number[], {declare, assign, wait}: Utils
   buckets.forEach((bucket, offset) => declare(`${min + offset}`, bucket))
 
   for (let i = 0; i < n; i++) {
-    yield assign(buckets[home.get(i).value - min].prepareInsert(), home.get(i), true)
-    home.finishPreparation()
+    let bucket = buckets[home.get(i).value - min]
+    yield assign(bucket.prepareInsert(), home.get(i), true)
+    bucket.finishPreparation()
   }
   home.clear()
   for (let i = 0; i < buckets.length; i++) {

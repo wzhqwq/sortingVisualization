@@ -5,16 +5,20 @@ import NumberType from "./NumberType"
 type Hook<T> = Dispatch<SetStateAction<T>>
 
 export default class BucketType extends LinearTableType {
-  private setPrepare: Hook<boolean>
+  private _prepare: boolean = false
+
+  private setPrepare: Hook<boolean> = null
 
   prepareInsert() {
     let t = new NumberType(null)
     this.value = this.value.concat(t)
+    this._prepare = true
     this.setPrepare?.(true)
     return t
   }
 
   finishPreparation() {
+    this._prepare = false
     this.setPrepare?.(false)
   }
 
@@ -25,6 +29,7 @@ export default class BucketType extends LinearTableType {
   public registerHooks(setData: Hook<NumberType[]>, setPrepare: Hook<boolean>) {
     this.registerValueHook(setData)
     this.setPrepare = setPrepare
+    setPrepare(this._prepare)
   }
   public unregisterHooks() {
     this.unregisterValueHook()

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Algorithm } from "../algorithm/algorithmType"
 import NumberType from "../structure/NumberType"
 import ValueType from "../structure/ValueType"
@@ -15,6 +15,7 @@ export type UtilsType = {
   wait: (fn?: () => void) => UtilReturnType,
   swap: (i: NumberType, j: NumberType) => UtilReturnType,
   compare: (i: NumberType, j: NumberType) => UtilReturnType,
+  setDivider: Dispatch<SetStateAction<number>>,
 }
 
 const speedToDuration = [2000, 1000, 500, 250]
@@ -22,6 +23,7 @@ const speedToDuration = [2000, 1000, 500, 250]
 export default function ContextWrapper({ children }) {
   const [variables, setVariables] = useState<VariableType<ValueType<any>>[]>([])
   const [speed, setSpeed] = useState(1)
+  const [divider, setDivider] = useState(null)
   const [useTransition, setUseTransition] = useState(false)
 
   const speedRef = useRef(1)
@@ -67,6 +69,7 @@ export default function ContextWrapper({ children }) {
     wait,
     swap,
     compare,
+    setDivider,
   }), [declare, assign, wait, swap, compare])
 
   const step = useCallback(async () => {
@@ -108,7 +111,8 @@ export default function ContextWrapper({ children }) {
   }), [step, setSpeed, onAnimationCommand, startAlgorithm, stopAlgorithm])
   const model = useMemo<ModelType>(() => ({
     variables,
-  }), [variables])
+    divider,
+  }), [variables, divider])
 
   return (
     <Controller.Provider value={controller}>

@@ -25,6 +25,9 @@ $stripe-width: 8px;
     &.highlight {
       background-color: rgb(0, 177, 80);
     }
+    .weaken {
+      color: lighten(rgb(0, 132, 209), 20%);
+    }
   }
   &.null {
     .content {

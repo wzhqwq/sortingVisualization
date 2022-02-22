@@ -4,8 +4,6 @@ import SubstanceType from "./SubstanceType"
 type Hook<T> = Dispatch<SetStateAction<T>>
 
 export default class NumberType extends SubstanceType<number> {
-  public indexLabels: string[] = []
-
   private _highlighted: boolean = false
   private _hidden: boolean = false
 

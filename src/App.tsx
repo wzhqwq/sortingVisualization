@@ -16,6 +16,7 @@ import quickSort from './algorithm/quickSort'
 import mergeSort from './algorithm/mergeSort'
 import heapSort from './algorithm/heapSort'
 import boxSort from './algorithm/boxSort'
+import radixSort from './algorithm/radixSort'
 
 type PageInfoType = {
   title: string,
@@ -57,7 +58,7 @@ const pages: MapLike<PageInfoType> = {
   '/radix': {
     title: '基数排序',
     icon: <Filter1Rounded />,
-    algorithm: null,
+    algorithm: radixSort,
   },
   '/select': {
     title: '选择排序',

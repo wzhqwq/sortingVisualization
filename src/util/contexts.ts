@@ -14,6 +14,7 @@ export const Controller = createContext<ControllerType>({
 
 export const Model = createContext<ModelType>({
   variables: [],
+  divider: null,
 })
 
 export type ControllerType = {
@@ -25,5 +26,6 @@ export type ControllerType = {
 }
 
 export type ModelType = {
-  variables: Variable<ValueType<any>>[]
+  variables: Variable<ValueType<any>>[],
+  divider: number,
 }
