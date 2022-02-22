@@ -11,7 +11,7 @@ export type GeneratorNextType = void | number
 export type AnimationCommandHandlerType = (command: Command) => Promise<void>
 export type UtilsType = {
   declare: <T extends ValueType<any>>(label: string, value: T) => void,
-  assign: (destination: NumberType, source: NumberType) => UtilReturnType,
+  assign: (destination: NumberType, source: NumberType, setNull?: boolean) => UtilReturnType,
   wait: (fn?: () => void) => UtilReturnType,
   swap: (i: NumberType, j: NumberType) => UtilReturnType,
   compare: (i: NumberType, j: NumberType) => UtilReturnType,
@@ -43,9 +43,9 @@ export default function ContextWrapper({ children }) {
       })
   }
   , [])
-  const assign = useCallback((destination: NumberType, source: NumberType) => () =>
+  const assign = useCallback((destination: NumberType, source: NumberType, setNull: boolean = false) => () =>
     animationCommandHandler.current?.(
-      new Command("moveTo", source, destination, speedToDuration[speedRef.current])
+      new Command("moveTo", source, destination, speedToDuration[speedRef.current], setNull ? 'setNull' : '')
     )
   , [])
   const swap = useCallback((a: NumberType, b: NumberType) => () =>

@@ -31,8 +31,8 @@ export default function *heapSort(input: number[], {declare, assign, compare, wa
       c <<= 1
     }
     indexC.icon = 'ok'
-    yield assign(heap.get(c >> 1), current)
-    current.value = indexC.value = null
+    yield assign(heap.get(c >> 1), current, true)
+    indexC.value = null
   }
 
   // 初始化堆
@@ -41,11 +41,10 @@ export default function *heapSort(input: number[], {declare, assign, compare, wa
   }
   // 堆排序
   for (let i = 0; i < n; i++) {
-    yield assign(array.get(i), heap.get(1))
+    yield assign(array.get(i), heap.get(1), true)
     if (i < n - 1) {
-      yield assign(heap.get(1), heap.get(n - i))
+      yield assign(heap.get(1), heap.get(n - i), true)
     }
-    heap.get(n - i).value = null
     if (i < n - 1) {
       yield *heapify(1)
     }

@@ -26,13 +26,9 @@ export default function Number({ number, linked = false }: PropsType) {
       <div className={`content transition${highlighted ? ' highlight' : ''}`}>
         {value ?? ""}
       </div>
-      {
-        linked && value !== null && (
-          <div className="link">
-            <ArrowForward />
-          </div>
-        )
-      }
+      <div className={`link transition${linked && value !== null ? ' show' : ''}`}>
+        <ArrowForward />
+      </div>
     </div>
   )
 }

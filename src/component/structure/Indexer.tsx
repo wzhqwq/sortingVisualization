@@ -14,7 +14,7 @@ const icons = {
   'left': <ArrowBack />,
   'right': <ArrowForward />,
   'search': <Search />,
-  'ok': <Check />
+  'ok': <Check className='ok' />
 }
 
 export default function Indexer({ index, label }: PropsType) {

@@ -112,6 +112,9 @@ export default function Stage() {
             break
           case "moveTo":
             numActor1.copy(a)
+            if (command.extra === 'setNull') {
+              a.value = null
+            }
             a.hidden = true
             keyframe = new KeyframeEffect(numActor1.ref.current, [
               { transform: `translate(${rectA.left}px, ${rectA.top}px)` },
@@ -153,11 +156,6 @@ export default function Stage() {
               numActor1.value = numActor2.value = null
             }
             setCompareSymbol(command.extra)
-            break
-          case "mark":
-            // highlight
-            break
-          case "clearMark":
             break
           default:
             return null

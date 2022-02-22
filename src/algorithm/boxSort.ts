@@ -1,7 +1,7 @@
 import BucketType from "../structure/BucketType";
 import { UtilsType } from "../util/ContextWrapper";
 
-export default function *boxSort(input: number[], {declare, compare, assign, wait}: UtilsType) {
+export default function *boxSort(input: number[], {declare, assign, wait}: UtilsType) {
   let home = new BucketType(input)
   let max = input.reduce((a, b) => Math.max(a, b), input[0])
   let min = input.reduce((a, b) => Math.min(a, b), input[0])
@@ -11,6 +11,15 @@ export default function *boxSort(input: number[], {declare, compare, assign, wai
   buckets.forEach((bucket, offset) => declare(`${min + offset}`, bucket))
 
   for (let i = 0; i < n; i++) {
-    yield assign(buckets[home.get(i).value - min].prepareInsert(), home.get(i))
+    yield assign(buckets[home.get(i).value - min].prepareInsert(), home.get(i), true)
+    home.finishPreparation()
+  }
+  home.clear()
+  for (let i = 0; i < buckets.length; i++) {
+    for (let j = 0; j < buckets[i].getLength(); j++) {
+      yield assign(home.prepareInsert(), buckets[i].get(j), true)
+      home.finishPreparation()
+    }
+    buckets[i].clear()
   }
 }

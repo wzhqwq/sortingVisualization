@@ -40,5 +40,13 @@ $stripe-width: 8px;
     top: 16px;
     right: -30px;
     color:rgb(0, 132, 209);
+    filter: opacity(0);
+    transform: translateX(-20px);
+    transition-property: filter, transform;
+    transition-timing-function: ease-out;
+    &.show {
+      filter: opacity(1);
+      transform: translateX(0);
+    }
   }
 }
