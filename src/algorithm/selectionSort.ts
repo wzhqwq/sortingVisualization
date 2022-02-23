@@ -12,7 +12,7 @@ export default function *selectionSort(input: number[], {declare, compare, swap,
   for (let i = 0; i < n - 1; i++) {
     indexMax.value = array.get(0)
     for (let j = 1; j < n - i; j++) {
-      if ((yield compare(indexMax.value, array.get(j))) < 0) {
+      if ((yield compare(array.get(j), indexMax.value)) > 0) {
         indexMax.value = array.get(j)
       }
     }

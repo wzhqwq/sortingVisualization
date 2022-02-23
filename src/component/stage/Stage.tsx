@@ -59,7 +59,7 @@ export default function Stage() {
 
   const stageRef = useRef<HTMLDivElement>(null)
   const compareRef = useRef<HTMLDivElement>(null)
-  const maskRef = useRef<HTMLDivElement>(null)
+  const compareLineRef = useRef<HTMLDivElement>(null)
 
   const toStagePosition = useCallback((rect: DOMRect) => {
     const stage = stageRef.current?.getBoundingClientRect()
@@ -75,7 +75,6 @@ export default function Stage() {
       let afterWork: () => void = null
       let rectA = toStagePosition(command.a.getRect()),
           rectB = toStagePosition(command.b.getRect())
-      let rangeWidth = Math.max(rectA.width * 2 + 10, rectB.x + rectB.width - rectA.x)
       let animationOptions: KeyframeEffectOptions = {
         duration: command.duration,
       }
@@ -129,9 +128,19 @@ export default function Stage() {
           case "compare":
             numActor1.copy(a)
             numActor2.copy(b)
-            compareRef.current.style.width = `${rangeWidth}px`
-            compareRef.current.style.left = `${rectA.left}px`
-            compareRef.current.style.top = `${rectA.top}px`
+            let left = Math.min(rectA.left, rectB.left), right = Math.max(rectA.left + rectA.width, rectB.left + rectB.width),
+                top = Math.min(rectA.top, rectB.top), bottom = Math.max(rectA.top + rectA.height, rectB.top + rectB.height)
+            let compareStyle = compareRef.current.style
+            let compareLineStyle = compareLineRef.current.style
+            compareStyle.width = `${right - left}px`
+            compareStyle.height = `${bottom - top}px`
+            compareStyle.left = `${left}px`
+            compareStyle.top = `${top}px`
+            let [ap, bp] = [rectA, rectB].map(({top, left, width, height}) => [left + width / 2, top + height / 2])
+            let angle = Math.atan2(ap[1] - bp[1], ap[0] - bp[0]) - Math.PI
+            let length = Math.sqrt((ap[0] - bp[0]) ** 2 + (ap[1] - bp[1]) ** 2)
+            compareLineStyle.width = `${length}px`
+            compareLineStyle.transform = `rotateZ(${angle}rad)`
             numActor1.ref.current.style.transform = `translate(${rectA.left}px, ${rectA.top}px)`
             numActor2.ref.current.style.transform = `translate(${rectB.left}px, ${rectB.top}px)`
             const keyframes = command.duration <= 500 ? [
@@ -144,14 +153,6 @@ export default function Stage() {
               { filter: 'opacity(0)' },
             ]
             keyframe = new KeyframeEffect(compareRef.current, keyframes, animationOptions)
-            {
-              const maskKeyframe = new KeyframeEffect(maskRef.current, keyframes, animationOptions)
-              const maskAnimation = new Animation(maskKeyframe, document.timeline)
-              extraAnimationPromise = new Promise(resolve => {
-                maskAnimation.onfinish = () => resolve()
-                maskAnimation.play()
-              })
-            }
             afterWork = () => {
               numActor1.value = numActor2.value = null
             }
@@ -208,12 +209,14 @@ export default function Stage() {
         ) : getDataStage()
       }
       <div className="stage-animation">
-        <div className="mask" ref={maskRef}>
-        </div>
         <Number number={numActor1} />
         <Number number={numActor2} />
         <div className="compare-wrap" ref={compareRef}>
-          <div className="compare-symbol">{compareSymbol}</div>
+          <div className="compare-line" ref={compareLineRef}>
+            <div className="compare-symbol">
+              <div className={`symbol-${compareSymbol}`}></div>
+            </div>
+          </div>
         </div>
         {variables
           .filter(variable => variable.value instanceof IndexType)

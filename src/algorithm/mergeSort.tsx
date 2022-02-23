@@ -24,7 +24,7 @@ export default function *mergeSort(input: number[], {declare, compare, assign, w
     indexI.value = a.get(i)
     indexJ.value = a.get(j)
     while (i <= m && j <= r) {
-      if ((yield compare(a.get(i), a.get(j))) < 0) {
+      if ((yield compare(a.get(j), a.get(i))) > 0) {
         yield assign(b.get(k), a.get(i))
         indexI.value = a.get(++i)
       }
