@@ -21,10 +21,10 @@ export default function *heapSort(input: number[], {declare, assign, compare, wa
     indexC.icon = 'search'
     while (c <= n) {
       indexC.value = heap.get(c)
-      if (c < n && (yield compare(heap.get(c), heap.get(c + 1))) < 0) {
+      if (c < n && (yield compare(heap.get(c + 1), heap.get(c))) < 0) {
         indexC.value = heap.get(++c)
       }
-      if ((yield compare(current, heap.get(c))) >= 0) {
+      if ((yield compare(current, heap.get(c))) <= 0) {
         break;
       }
       yield assign(heap.get(c >> 1), heap.get(c))
