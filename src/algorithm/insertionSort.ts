@@ -19,7 +19,7 @@ export default function *insertionSort(input: number[], {declare, assign, compar
     yield assign(current, array.get(i))
     let j = i
     indexJ.value = array.get(i)
-    while (j > 0 && (yield compare(current, array.get(j - 1))) < 0) {
+    while (j > 0 && (yield compare(array.get(j - 1), current)) > 0) {
       yield assign(array.get(j), array.get(j - 1))
       j--
       indexJ.value = array.get(j)

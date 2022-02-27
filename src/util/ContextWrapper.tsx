@@ -58,7 +58,7 @@ export default function ContextWrapper({ children }) {
   const compare = useCallback((a: NumberType, b: NumberType) => async () => {
     await animationCommandHandler.current?.(
       new Command("compare", a, b, speedToDuration[speedRef.current],
-                  a.value === b.value ? "=" : (a.value > b.value ? ">" : "<"))
+                  a.value === b.value ? "eq" : (a.value > b.value ? "gt" : "lt"))
     )
     return a.value - b.value
   }, [])

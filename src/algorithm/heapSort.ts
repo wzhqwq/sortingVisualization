@@ -10,6 +10,7 @@ export default function *heapSort(input: number[], {declare, assign, compare, wa
   let current = new NumberType(null)
   let indexC = new IndexType(null)
   let n = input.length
+  let size = n
   declare("堆", heap)
   declare("结果", array)
   declare("要处理的节点", current)
@@ -19,12 +20,12 @@ export default function *heapSort(input: number[], {declare, assign, compare, wa
     yield assign(current, heap.get(root))
     let c = root << 1
     indexC.icon = 'search'
-    while (c <= n) {
+    while (c <= size) {
       indexC.value = heap.get(c)
-      if (c < n && (yield compare(heap.get(c + 1), heap.get(c))) < 0) {
+      if (c < size && (yield compare(heap.get(c), heap.get(c + 1))) > 0) {
         indexC.value = heap.get(++c)
       }
-      if ((yield compare(current, heap.get(c))) <= 0) {
+      if ((yield compare(current, heap.get(c))) < 0) {
         break;
       }
       yield assign(heap.get(c >> 1), heap.get(c))
@@ -42,10 +43,9 @@ export default function *heapSort(input: number[], {declare, assign, compare, wa
   // 堆排序
   for (let i = 0; i < n; i++) {
     yield assign(array.get(i), heap.get(1), true)
+    size--
     if (i < n - 1) {
       yield assign(heap.get(1), heap.get(n - i), true)
-    }
-    if (i < n - 1) {
       yield *heapify(1)
     }
   }

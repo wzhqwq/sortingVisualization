@@ -26,7 +26,7 @@ export default function* quickSort(input: number[], { declare, compare, swap, wa
       }
       indexI.icon = ''
       indexJ.icon = 'left'
-      while (l <= j && (yield compare(pivot, indexJ.value)) < 0) {
+      while (l <= j && (yield compare(indexJ.value, pivot)) > 0) {
         indexJ.value = array.get(--j)
       }
       indexJ.icon = ''
