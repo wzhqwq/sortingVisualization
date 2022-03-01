@@ -38,6 +38,9 @@ $compare-line: #333;
   > .number.null {
     display: none;
   }
+  > .indexer {
+    z-index: 20;
+  }
 }
 .stage-logger {
   width: 260px;
@@ -54,7 +57,7 @@ $compare-line: #333;
   filter: opacity(0);
   height: 2px;
   transform-origin: 1px;
-  background-image: repeating-linear-gradient(to right, $compare-line, $compare-line 5px, transparent 5px, transparent 10px);
+  background-image: repeating-linear-gradient(to right, $compare-line, $compare-line 5px, $label-bg 5px, $label-bg 10px);
   box-shadow: 0 0 2px 4px $label-bg;
   z-index: 5;
 }
