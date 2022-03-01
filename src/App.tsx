@@ -17,6 +17,8 @@ import mergeSort from './algorithm/mergeSort'
 import heapSort from './algorithm/heapSort'
 import boxSort from './algorithm/boxSort'
 import radixSort from './algorithm/radixSort'
+import NumberType from './structure/NumberType'
+import Number from './component/value/Number'
 
 type PageInfoType = {
   title: string,
@@ -170,6 +172,24 @@ function AlgorithmPage({ algorithm, arr }: {algorithm: Algorithm, arr: number[]}
       <Stage />
       <StepController ended={ended} setEnded={setEnded} reset={reset} />
     </Fragment>
+  )
+}
+
+function Test() {
+  let a = new NumberType(null)
+  let b = new NumberType(1)
+  let c = new NumberType(12)
+  let d = new NumberType(100)
+  c.highlight()
+  d.hidden = true
+
+  return (
+    <div style={{ margin: 100, width: 400, display: 'flex', justifyContent: 'space-around' }}>
+      <Number number={a} />
+      <Number number={b} />
+      <Number number={c} />
+      <Number number={d} />
+    </div>
   )
 }
 

@@ -90,6 +90,7 @@ export default function ContextWrapper({ children }) {
   }, [])
 
   const startAlgorithm = useCallback((arr: number[], algorithm: Algorithm) => {
+    setDivider(null)
     generator.current = algorithm(arr, utils)
     let result = generator.current?.next()
     if (result.done) return true

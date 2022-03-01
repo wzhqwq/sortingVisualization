@@ -2,8 +2,6 @@ $label-bg: rgb(222, 243, 253);
 $compare-bg: #FFF;
 $compare-border: 2px solid #AAA;
 $compare-line: #333;
-$mask-bg: #FFFD;
-$mark-bg: rgb(255, 221, 109);
 
 .stage {
   flex-shrink: 0;
@@ -31,12 +29,11 @@ $mark-bg: rgb(255, 221, 109);
   position: absolute;
   top: 0;
   left: 0;
-  > .number,
-  > .linked_node {
+  > .number {
     position: absolute;
     top: 0;
     left: 0;
-    // transition: none;
+    z-index: 10;
   }
   > .number.null {
     display: none;
@@ -52,41 +49,20 @@ $mark-bg: rgb(255, 221, 109);
   }
 }
 
-.mask {
-  width: 100%;
-  height: calc(100% - 10px);
-  top: 10px;
-  left: 0;
-  position: absolute;
-  background-color: $mask-bg;
-  filter: opacity(0);
-}
-
-.compare-wrap,
-.mark {
-  position: absolute;
-  height: 60px;
-  padding: 10px;
-  margin: -10px;
-  filter: opacity(0);
-}
-.compare-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .compare-line {
+  position: absolute;
+  filter: opacity(0);
   height: 2px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: repeating-linear-gradient(to right, $compare-line, $compare-line 5px, transparent 5px, transparent 8px);
+  transform-origin: 1px;
+  background-image: repeating-linear-gradient(to right, $compare-line, $compare-line 5px, transparent 5px, transparent 10px);
+  box-shadow: 0 0 2px 4px $label-bg;
+  z-index: 5;
 }
 .compare-symbol {
-  max-width: 60px;
-  flex-grow: 1;
-  margin: 0 15px;
+  position: absolute;
+  filter: opacity(0);
+  transform-origin: center;
+  z-index: 15;
   > div {
     height: 0;
     padding-bottom: 100%;
@@ -102,10 +78,6 @@ $mark-bg: rgb(255, 221, 109);
 }
 .symbol-gt {
   background-image: url(gt.png);
-}
-.mark {
-  border-radius: 10px;
-  background-color: $mark-bg;
 }
 
 .variable {
