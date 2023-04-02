@@ -8,17 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
-    
-    - name: use node.js 16
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: 16
-    
-    - name: install & build
-      run: |
-        npm install
-        npm run build
+        node-version: '16'
+        cache: 'yarn'
+    - run: yarn install --frozen-lockfile # optional, --immutable
+    - run: yarn build
     
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v1.0.8
