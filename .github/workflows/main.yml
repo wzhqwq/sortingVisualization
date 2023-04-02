@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+    - main
+jobs:
+  deploy:
+    name: build and deploy to github pages
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: use node.js 10
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10
+    
+    - name: install & build
+      run: |
+        npm install
+        npm run build
+    
+    - name: Upload GitHub Pages artifact
+      uses: actions/upload-pages-artifact@v1.0.8
+      with:
+        # Artifact name
+        name: sorting-virtualization
+        # Path of the directory containing the static assets.
+        path: build/
+        # Duration after which artifact will expire in days.
+        retention-days: 100
